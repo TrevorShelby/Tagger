@@ -1,12 +1,6 @@
 const fs = require('fs')
 const path = require('path')
-
-
-const getInitFilepath = (initFilepathSegment) => {
-	let initFilepath = path.resolve(process.cwd(), initFilepathSegment)
-	if(path.extname(initFilepath) != '.json') initFilepath += '.json'
-	return initFilepath
-}
+const getInitFilepath = require('../utils/getInitFilepath')
 
 
 module.exports = ({initFpSeg='init.json', tags, taggingFpSegs}) => {
