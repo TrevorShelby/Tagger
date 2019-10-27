@@ -20,6 +20,7 @@ module.exports = ({initFpSeg='init.json', tags, taggingFpSegs}) => {
 			if(!(tag in tagDir)) tagDir[tag] = []
 			tagDir[tag].push(...taggingFps)
 		})
+		fs.write(initFp, JSON.stringify(tagDir))
 		console.log('Finished tagging files.')
 	}
 	else
