@@ -6,6 +6,7 @@ const getJsonFilepath = require('../utils/getJsonFilepath')
 module.exports = ({tagDirFpSeg='./tag-dir.json', tags, taggingFpSegs}) => {
 	const tagDirFp = getJsonFilepath(tagDirFpSeg)
 
+	//TODO: Allow for the tagging of directories
 	const taggingFps = taggingFpSegs.map(taggingFpSeg => path.resolve(process.cwd(),taggingFpSeg))
 	if(fs.existsSync(tagDirFp)) {
 		//TODO: Add code for if the file at tagDirFp isn't properly formatted.
