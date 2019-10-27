@@ -1,16 +1,16 @@
 const fs = require('fs')
 const path = require('path')
-const getInitFilepath = require('../utils/getInitFilepath')
+const getJsonFilepath = require('../utils/getJsonFilepath')
 
 
-//initFpSeg is the file path segment given by the user to be used for the init file.
-module.exports = ({initFpSeg='./init.json'}={}) => {
-	const initFp = getInitFilepath(initFpSeg)
+//tagDirFpSeg is the file path segment given by the user to be used for the init file.
+module.exports = ({tagDirFpSeg='./tag-dir.json'}={}) => {
+	const tagDirFp = getJsonFilepath(tagDirFpSeg)
 
-	if(fs.existsSync(initFp))
-		console.log(`${initFp} already exists.`)
+	if(fs.existsSync(tagDirFp))
+		console.log(`${tagDirFp} already exists.`)
 	else {
-		fs.writeFileSync(initFp, JSON.stringify('{}'))
-		console.log(`Initialized ${initFp}.`)
+		fs.writeFileSync(tagDirFp, JSON.stringify({}))
+		console.log(`Initialized ${tagDirFp}.`)
 	}
 }
