@@ -3,7 +3,7 @@ const path = require('path')
 const changeTagDir = require('../utils/changeTagDir')
 
 
-const untagFiles = tagDir => {
+const untagFiles_ = (tags, filepaths) => tagDir => {
 	tags.forEach( tag => {
 		if(!(tag in tagDir)) {
 			console.log(`${tag} is not a tag.`)
@@ -27,5 +27,7 @@ module.exports = ({tagDirFilename='tag-dir.json', tags, filenames}) => {
 		else console.log(`${filepath} does not exist and will not be tagged.`)
 	}).filter(filepath => filepath != null)
 
-	changeTagDir(tagDirFilename, untagFiles, () => console.log('Finished untagging files.') )
+	changeTagDir(
+		tagDirFilename, untagFiles_(tags, filepaths), () => console.log('Finished untagging files.')
+	)
 }
