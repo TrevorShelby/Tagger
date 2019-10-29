@@ -4,6 +4,7 @@ const initTagDir = require('./cmd/init')
 const tagFiles = require('./cmd/tag')
 const untagFiles = require('./cmd/untag')
 const removeFiles = require('./cmd/removeFiles')
+const removeTags = require('./cmd/removeTags')
 
 
 module.exports = () => {
@@ -30,6 +31,11 @@ module.exports = () => {
 		removeFiles({
 			tagDirFilename: args._[1] || 'tag-dir.json',
 			filenames: (args.files || args.f).split(',')
+		})
+	else if(cmd == 'remove-tags')
+		removeTags({
+			tagDirFilename: args._[1] || 'tag-dir.json',
+			tags: (args.tag || args.t).split(',')
 		})
 	//TODO: Create a rename command to rename all instances of a path in the tag directory.
 	//TODO: Add help and version command.
