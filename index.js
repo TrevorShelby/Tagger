@@ -1,8 +1,9 @@
 const parseArgs = require('minimist')
 
 const initTagDir = require('./cmd/init')
-const addTags = require('./cmd/tag')
-const removeTags = require('./cmd/untag')
+const tagFiles = require('./cmd/tag')
+const untagFiles = require('./cmd/untag')
+const removeFiles = require('./cmd/removeFiles')
 
 
 module.exports = () => {
@@ -12,15 +13,22 @@ module.exports = () => {
 	if(cmd == 'init')
 		initTagDir({tagDirFilename: args._[1] || 'tag-dir.json'})
 	else if(cmd == 'tag')
-		addTags({
+		tagFiles({
 			tagDirFilename: args._[1] || 'tag-dir.json',
 			tags: (args.tags || args.t).split(','),
 			filenames: (args.files || args.f).split(',')
 		})
 	else if(cmd == 'untag')
-		removeTags({
+		untagFiles({
 			tagDirFilename: args._[1] || 'tag-dir.json',
 			tags: (args.tag || args.t).split(','),
+			filenames: (args.files || args.f).split(',')
+		})
+	else if(cmd == 'remove-files')
+		//TODO: Try to figure out a way where filenames can be non-option arguments while still
+		//accounting for the optional tagDirFilename argument.
+		removeFiles({
+			tagDirFilename: args._[1] || 'tag-dir.json',
 			filenames: (args.files || args.f).split(',')
 		})
 }
