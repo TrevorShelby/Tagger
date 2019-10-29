@@ -17,7 +17,12 @@ module.exports = ({tagDirFilename='tag-dir.json', tags, filenames}) => {
 		const tagDir = JSON.parse(fs.readFileSync(tagDirFilepath))
 		tags.forEach( tag => {
 			if(!(tag in tagDir)) tagDir[tag] = []
-			tagDir[tag].push(...filepaths)
+			filepaths.forEach( filepath => {
+				if(tagDir[tag].includes(filepath))
+					console.log(`${filepath} is already tagged as ${tag}`)
+				else
+					tagDir[tag].push(filepath)
+			})
 		})
 		fs.writeFileSync(tagDirFilepath, JSON.stringify(tagDir))
 		console.log('Finished tagging files.')
