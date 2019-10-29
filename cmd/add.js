@@ -11,7 +11,7 @@ module.exports = ({tagDirFilename='tag-dir.json', tags, filenames}) => {
 		const filepath = path.resolve(process.cwd(),filename)
 		if(fs.existsSync(filepath)) return filepath
 		else console.log(`${filepath} does not exist and will not be tagged.`)
-	})
+	}).filter(filepath => filepath != null)
 	if(fs.existsSync(tagDirFilepath)) {
 		//TODO: Add code for if the file at tagDirFilepath isn't properly formatted.
 		const tagDir = JSON.parse(fs.readFileSync(tagDirFilepath))
