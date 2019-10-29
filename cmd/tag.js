@@ -19,7 +19,7 @@ module.exports = ({tagDirFilename='tag-dir.json', tags, filenames}) => {
 			if(!(tag in tagDir)) tagDir[tag] = []
 			filepaths.forEach( filepath => {
 				if(tagDir[tag].includes(filepath))
-					console.log(`${filepath} is already tagged as ${tag}`)
+					console.log(`${filepath} is already tagged as ${tag}.`)
 				else
 					tagDir[tag].push(filepath)
 			})
