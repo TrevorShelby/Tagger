@@ -37,6 +37,8 @@ module.exports = () => {
 			tagDirFilename: args._[1] || 'tag-dir.json',
 			tags: (args.tag || args.t).split(',')
 		})
+	else
+		console.log('Unrecognized command.')
 	//TODO: Create a rename command to rename all instances of a path in the tag directory.
 	//TODO: Add help and version command.
 }
