@@ -107,27 +107,3 @@ module.exports = class TagDirectory {
 		return results
 	}
 }
-
-// const tagDir = new TagDirectory()
-// tagDir.tagFiles(['doofus', 'buffoon', 'goon', 'mook', 'hooligan'], ['double-o'])
-
-// tagDir.tagFiles(['gremlin', 'goblin'], ['monster'])
-
-// tagDir.tagFiles(['schmuck', 'doofus', 'buffoon'], ['idiot'])
-
-// tagDir.tagFiles(['gremlin', 'goblin', 'goon', 'mook', 'hooligan', 'ruffian', 'yobbo'], ['troublemaker'])
-
-// tagDir.tagFiles(['schmuck', 'gremlin', 'goblin'], ['favorites'])
-
-
-// console.log(tagDir.files)
-// console.log()
-// console.log(tagDir.tags)
-// console.log()
-// console.log()
-
-// tagDir.removeTags(['troublemaker'])
-
-// console.log(tagDir.files)
-// console.log()
-// console.log(tagDir.tags)
