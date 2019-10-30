@@ -6,8 +6,8 @@ module.exports = ({tagDirFilename='tag-dir.json', tags}) => {
 		tagDirFilename,
 		tagDir => {
 			tags.forEach( tag => {
-				if(tag in tagDir)
-					delete tagDir[tag]
+				if(tag in tagDir.tags)
+					delete tagDir.tags[tag]
 				else
 					console.log(`${tag} is not a tag.`)
 			})

@@ -3,11 +3,19 @@ const changeTagDir = require('../utils/changeTagDir')
 
 
 const removeFilesFromTagDir_ = filepaths => tagDir => {
-	for(tag in tagDir) {
+	filepaths.forEach( filepath => {
+		const filepathIndex = tagDir.files.indexOf(filepath)
+		if(filepathIndex != -1)
+			tagDir.files.splice(filepathIndex, 1)
+		else
+			console.log(`${filepath} is not listed in the directory's file list. All of its tags will still be removed, if it has any.`)
+	})
+	for(tag in tagDir.tags) {
 		//TODO: Consider adding a warning if filepath doesn't appear anywhere in the tag directory.
 		filepaths.forEach( filepath => {
-			if(tagDir[tag].includes(filepath))
-				tagDir[tag].splice(tagDir[tag].indexOf(filepath), 1)
+			const filepathIndex = tagDir.tags[tag].indexOf(filepath)
+			if(filepathIndex != -1)
+				tagDir.tags[tag].splice(filepathIndex, 1)
 		})
 	}
 }
