@@ -11,6 +11,8 @@ module.exports = (tagDirFilename, makeChange, onWrite) => {
 		fs.writeFileSync(tagDirFilepath, JSON.stringify(tagDir))
 		onWrite(tagDir)
 	}
-	else
-		console.log(`${tagDirFilepath} does not exist.`)
+	else {
+		console.error(`${tagDirFilepath} does not exist.`)
+		process.exit(1)
+	}
 }
