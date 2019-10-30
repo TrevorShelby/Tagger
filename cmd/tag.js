@@ -1,25 +1,13 @@
 const fs = require('fs')
 const path = require('path')
 const changeTagDir = require('../utils/changeTagDir')
+const TagDirectory = require('../utils/tagDirectory')
+const printResults = require('../utils/printResults')
 
 
 const tagFiles_ = (tags, filepaths) => tagDir => {
-	//adds filepath to the directory if it doesn't already exist
-	filepaths.forEach( filepath => {
-		if(!tagDir.files.includes(filepath))
-			tagDir.files.push(filepath)
-	})
-
-	//in the directory, adds each tag to each file
-	tags.forEach( tag => {
-		if(!(tag in tagDir.tags)) tagDir.tags[tag] = []
-		filepaths.forEach( filepath => {
-			if(tagDir.tags[tag].includes(filepath))
-				console.log(`${filepath} already had the tag ${tag}.`)
-			else
-				tagDir.tags[tag].push(filepath)
-		})
-	})
+	const results = new TagDirectory(tagDir).tagFiles(filepaths, tags)
+	printResults(results, {alreadyTaggedFiles: ({file, tag}) => `${file} already had the tag ${tag}`})
 }
 
 

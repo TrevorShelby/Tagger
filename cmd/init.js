@@ -10,7 +10,7 @@ module.exports = ({tagDirFilename='tag-dir.json'}={}) => {
 		process.exit(1)
 	}
 	else {
-		fs.writeFileSync(tagDirFilepath, JSON.stringify( {files:[], tags: {}} ))
+		fs.writeFileSync(tagDirFilepath, JSON.stringify( {files:{}, tags: {}} ))
 		console.log(`Initialized ${tagDirFilepath}.`)
 	}
 }

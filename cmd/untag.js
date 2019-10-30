@@ -1,35 +1,21 @@
 const fs = require('fs')
 const path = require('path')
 const changeTagDir = require('../utils/changeTagDir')
+const TagDirectory = require('../utils/tagDirectory')
+const printResults = require('../utils/printResults')
 
+
+const resultHandlers = {
+	missingTags: missingTag => `${missingTag} is not a tag.`,
+	missingFiles: missingFile => `${missingFile} does not exist in this directory.`,
+	filesWithoutTag: ({file, tag}) => `${file} did not have the tag ${tag}.`,
+	tagsWithoutFile: ({file, tag}) => `${file} had the tag ${tag}, but ${tag} did not list as having ${file}.`,
+	removedFiles: removedFile => `Removing ${removedFile} from the directory since it has no more tags.`
+}
 
 const untagFiles_ = (tags, filepaths) => tagDir => {
-	tags.forEach( tag => {
-		if(!(tag in tagDir.tags)) {
-			console.log(`${tag} is not a tag.`)
-			return
-		}
-		filepaths.forEach(filepath => {
-			const filepathIndex = tagDir.tags[tag].indexOf(filepath)
-			if(filepathIndex != -1)
-				tagDir.tags[tag].splice(filepathIndex, 1)
-			else
-				console.log(`${filepath} did not have the tag ${tag}`)
-		})
-	})
-
-	//removes a filepath if it has no tags associated with it.
-	filepaths.forEach( filepath => {
-		const filepathIsReferenced = Object.keys(tagDir.tags)
-			.filter(tag => !tags.includes(tag))
-			.reduce( (filepathIsReferenced, tag) => {
-				return filepathIsReferenced || tagDir.tags[tag].includes(filepath)
-			}, false)
-		if(!filepathIsReferenced) {
-			console.log(`Removing ${filepath} from the directory as it has no tags.`)
-			tagDir.files.splice(tagDir.files.indexOf(filepath), 1)
-		}
-	})
+	const results = new TagDirectory(tagDir).untagFiles(filepaths, tags)
+	printResults(results, resultHandlers)
 }
 
 
