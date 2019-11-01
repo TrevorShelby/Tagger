@@ -16,5 +16,13 @@ module.exports = ({tagDirFilename='tag-dir.json', tags, filenames}) => {
 		else handleIssue('warning', '016', filepath)
 	}).filter(filepath => filepath != null)
 
+	tags = tags.filter( tag => {
+		if(/^\w+$/.test(tag)) return true
+		else {
+			handleIssue('warning', '017', tag)
+			return false
+		}
+	})
+
 	changeTagDir(tagDirFilename, tagFiles_(tags, filepaths), () => handleIssue('success', '103'))
 }

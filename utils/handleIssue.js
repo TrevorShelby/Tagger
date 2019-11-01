@@ -12,6 +12,7 @@ const config = {
 	'014': (file, tag) => `${file} already had the tag ${tag}.`,
 	'015': (removedFile) => `${removedFile} was removed from the directory since it didn't have any more tags.`,
 	'016': (nonexistentFile) => `${nonexistentFile} does not exist and will not be tagged.`,
+	'017': (invalidTag) => `${invalidTag} is not a valid tag. Tags may only contain letters, numbers, and underscores.`,
 	'020': (query, unmatchedParenIndex) => {
 		let out = 'Unmatched parenthesis:'
 		out += eol + query
