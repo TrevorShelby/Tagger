@@ -45,7 +45,7 @@ module.exports = function parse(str, not=false) {
 			}
 		}
 		else
-			handleIssue('error', '021', str, str[0], 0)
+			handleIssue('error', '021', str, 0)
 	})()
 
 	const strAfterFirstPattern = str.substr(firstPattern.endIndex + 1).trimStart()
@@ -65,5 +65,5 @@ module.exports = function parse(str, not=false) {
 		}
 	}
 	else
-		handleIssue('error', '021', str, str[firstPattern.endIndex + 2], firstPattern.endIndex + 2)
+		handleIssue('error', '021', str, firstPattern.endIndex + 2)
 }

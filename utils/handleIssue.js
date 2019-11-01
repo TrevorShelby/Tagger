@@ -18,8 +18,8 @@ const config = {
 		out += eol + ' '.repeat(unmatchedParenIndex) + '^'
 		return out
 	},
-	'021': (query, unexpectedToken, unexpectedTokenIndex) => {
-		let out = `Unexpected token '${unexpectedToken}':`
+	'021': (query, unexpectedTokenIndex) => {
+		let out = `Unexpected token '${str[unexpectedTokenIndex]}':`
 		out += eol + query
 		out += eol + ' '.repeat(unexpectedTokenIndex) + '^'
 		return out
