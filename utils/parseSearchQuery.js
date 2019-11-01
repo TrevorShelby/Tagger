@@ -1,26 +1,5 @@
-//create not flag
-//check what comes first: an open paren character, a word character, or an exclamation point.
-//if exclamation point
-//	set not flag to true
-//  do same checking process without exclamation point substringed out, keeping not flag set to true and crashing if exclamation point comes up again
-//if open paren
-//	set not flag to false
-//	find index of matching closed paren
-//	parse substring between as first pattern (w/ not flag on pattern being toggled if not flag here is true)
-//if word character
-//  set not flag to false
-//  retrieve tag from this character plus consecutive word characters and make it first pattern
-//if something else (with spaces cut out), crash!
-//
-//if an operator comes after the first pattern but before any non-whitespace character
-//	make first pattern operand1
-//	make operator character the operator
-//  parse the rest of string after the operator as the second pattern, operand2
-//	problem when parsing this way: expression nesting goes right-to-left
-//otherwise, if the string ends before any non-whitespace character, or if a closed paren comes before any non-whitespace character
-//	return first pattern as a tag
-//otherwise, if something else comes after, crash!
-
+//TODO: Return errors responsibly instead of crashing.
+//TODO: Make expression nesting go left-to-right instead of right-to-left.
 
 const getClosingParenIndex = (str, openingParenIndex) => {
 	let numUnmatchedParens = 0
@@ -34,7 +13,6 @@ const getClosingParenIndex = (str, openingParenIndex) => {
 	}
 	return -1
 }
-
 
 
 module.exports = (str, not=false) => {
@@ -93,25 +71,3 @@ module.exports = (str, not=false) => {
 	else
 		process.exit(1)
 }
-
-// const parseParens = str => {
-// 	const {parenPairIndexes, unclosedParenPairQueue} = getParenPairIndexes(str)
-// 	if(unclosedParenPairQueue.length != 0) {
-// 		console.log(`Unmatched parenthes${unclosedParenPairQueue.length == 1 ? 'is' : 'es'}.`)
-// 		console.log(str)
-// 		console.log(unclosedParenPairQueue
-// 			.map( (unmatchedParenIndex_, i) => {
-// 				const unmatchedParenIndex = parenPairIndexes[unmatchedParenIndex_][0]
-// 				if(i == 0)
-// 					return unmatchedParenIndex
-// 				else {
-// 					const prevUnmatchedParenIndex = parenPairIndexes[unmatchedParenIndex_ - 1][0]
-// 					return unmatchedParenIndex - prevUnmatchedParenIndex - 1
-// 				}
-// 			})
-// 			.reduce( (indicatorStr, numSpaces) => indicatorStr + ' '.repeat(numSpaces) + '^', '' )
-// 		)
-// 	}
-// }
-
-// parseParens('hello (world))')
