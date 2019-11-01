@@ -5,6 +5,7 @@ const tagFiles = require('./cmd/tag')
 const untagFiles = require('./cmd/untag')
 const removeFiles = require('./cmd/removeFiles')
 const removeTags = require('./cmd/removeTags')
+const search = require('./cmd/search')
 
 
 module.exports = () => {
@@ -36,6 +37,11 @@ module.exports = () => {
 		removeTags({
 			tagDirFilename: args._[1] || 'tag-dir.json',
 			tags: (args.tag || args.t).split(',')
+		})
+	else if(cmd == 'search')
+		search({
+			tagDirFilename: args._[1] || 'tag-dir.json',
+			query: args.q || args.query
 		})
 	else
 		console.log('Unrecognized command.')
