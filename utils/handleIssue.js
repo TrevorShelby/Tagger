@@ -15,13 +15,13 @@ const config = {
 	'020': (query, unmatchedParenIndex) => {
 		let out = 'Unmatched parenthesis:'
 		out += eol + query
-		out += eol + ' '.repeat(unmatchedParenIndex - 1) + '^'
+		out += eol + ' '.repeat(unmatchedParenIndex) + '^'
 		return out
 	},
 	'021': (query, unexpectedToken, unexpectedTokenIndex) => {
 		let out = `Unexpected token '${unexpectedToken}':`
 		out += eol + query
-		out += eol + ' '.repeat(unexpectedTokenIndex - 1) + '^'
+		out += eol + ' '.repeat(unexpectedTokenIndex) + '^'
 		return out
 	},
 	'022': (tag) => `${tag} is not a tag.`,

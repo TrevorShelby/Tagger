@@ -1,3 +1,6 @@
+const handleIssue = require('./handleIssue')
+
+
 //TODO: Make expression nesting go left-to-right instead of right-to-left.
 
 const getClosingParenIndex = (str, openingParenIndex) => {
@@ -22,7 +25,7 @@ module.exports = function parse(str, not=false) {
 		if(str[0] == '(') {
 			const closingParenIndex = getClosingParenIndex(str, 1)
 			if(closingParenIndex == -1)
-				handleIssue('error', '020', str, closingParenIndex)
+				handleIssue('error', '020', str, 0)
 			return {
 				endIndex: closingParenIndex,
 				result: parse(str.substr(1, closingParenIndex + 1), not).result
@@ -42,7 +45,7 @@ module.exports = function parse(str, not=false) {
 			}
 		}
 		else
-			handleIssue('error', '021', str, 0)
+			handleIssue('error', '021', str, str[0], 0)
 	})()
 
 	const strAfterFirstPattern = str.substr(firstPattern.endIndex + 1).trimStart()
@@ -62,5 +65,5 @@ module.exports = function parse(str, not=false) {
 		}
 	}
 	else
-		handleIssue('error', '021', str, str[firstPattern.endIndex + 1])
+		handleIssue('error', '021', str, str[firstPattern.endIndex + 2], firstPattern.endIndex + 2)
 }
