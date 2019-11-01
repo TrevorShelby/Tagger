@@ -21,11 +21,7 @@ const untagFiles_ = (tags, filepaths) => tagDir => {
 
 module.exports = ({tagDirFilename='tag-dir.json', tags, filenames}) => {
 	//TODO: Allow for the untagging of directories
-	const filepaths = filenames.map(filename => {
-		const filepath = path.resolve(process.cwd(),filename)
-		if(fs.existsSync(filepath)) return filepath
-		else console.log(`${filepath} does not exist and will not be tagged.`)
-	}).filter(filepath => filepath != null)
+	const filepaths = filenames.map( filename => path.resolve(process.cwd(),filename) )
 
 	changeTagDir(
 		tagDirFilename, untagFiles_(tags, filepaths), () => console.log('Finished untagging files.')
