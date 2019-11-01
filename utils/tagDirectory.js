@@ -1,3 +1,6 @@
+const handleIssue = require('./handleIssue')
+
+
 module.exports = class TagDirectory {
 	constructor({files={}, tags={}}={}) {
 		this.files = files
@@ -5,9 +8,6 @@ module.exports = class TagDirectory {
 	}
 
 	tagFiles(files, tags) {
-		const results = {
-			alreadyTaggedFiles: []
-		}
 		files.forEach( file => {
 			if(!(file in this.files))
 				this.files[file] = []
@@ -15,7 +15,7 @@ module.exports = class TagDirectory {
 				if(!(tag in this.tags))
 					this.tags[tag] = []
 				if(this.tags[tag].includes(file)) {
-					results.alreadyTaggedFiles.push({file, tag})
+					handleIssue('warning', '014', file, tag)
 					return
 				}
 				else {
@@ -24,35 +24,27 @@ module.exports = class TagDirectory {
 				}
 			})
 		})
-		return results
 	}
 
 	untagFiles(files, tags) {
-		const results = {
-			missingFiles: [],
-			missingTags: [],
-			filesWithoutTag: [],
-			tagsWithoutFile: [],
-			removedFiles: []
-		}
 		files.forEach( file => {
 			if(!(file in this.files)) {
-				results.missingFiles.push(file)
+				handleIssue('warning', '010', file)
 				return
 			}
 			tags.forEach( tag => {
 				if(!(tag in this.tags)) {
-					results.missingTags.push(tag)
+					handleIssue('warning', '011', tag)
 					return
 				}
 				const tagIndex = this.files[file].indexOf(tag)
 				if(tagIndex == -1) {
-					results.filesWithoutTag.push({file, tag})
+					handleIssue('warning', '012', file, tag)
 					return
 				}
 				const fileIndex = this.tags[tag].indexOf(file)
 				if(fileIndex == -1) {
-					results.tagsWithoutFile.push({file, tag})
+					handleIssue('warning', '013', file, tag)
 					return
 				}
 				this.files[file].splice(tagIndex, 1)
@@ -60,20 +52,15 @@ module.exports = class TagDirectory {
 			})
 			if(this.files[file].length == 0) {
 				delete this.files[file]
-				results.removedFiles.push(file)
+				handleIssue('warning', '015', file)
 			}
 		})
-		return results
 	}
 
 	removeTags(tags) {
-		const results = {
-			missingTags: [],
-			removedFiles: []
-		}
 		tags.forEach( tag => {
 			if(!(tag in this.tags)) {
-				results.missingTags.push(tag)
+				handleIssue('warning', '011', tag)
 				return
 			}
 			this.tags[tag].forEach( taggedFile => {
@@ -81,21 +68,17 @@ module.exports = class TagDirectory {
 				this.files[taggedFile].splice(tagIndex, 1)
 				if(this.files[taggedFile].length == 0) {
 					delete this.files[taggedFile]
-					results.removedFiles.push(taggedFile)
+					handleIssue('warning', '015', file)
 				}
 			})
 			delete this.tags[tag]
 		})
-		return results
 	}
 
 	removeFiles(files) {
-		const results = {
-			missingFiles: []	
-		}
 		files.forEach( file => {
 			if(!(file in this.files)) {
-				results.missingFiles.push(files)
+				handleIssue('warning', '010', file)
 				return
 			}
 			this.files[file].forEach( tagWithFile => {
@@ -104,6 +87,5 @@ module.exports = class TagDirectory {
 			})
 			delete this.files[file]
 		})
-		return results
 	}
 }

@@ -2,14 +2,10 @@ const fs = require('fs')
 const path = require('path')
 const changeTagDir = require('../utils/changeTagDir')
 const TagDirectory = require('../utils/tagDirectory')
-const printResults = require('../utils/printResults')
+const handleIssue = require('../utils/handleIssue')
 
 
-const tagFiles_ = (tags, filepaths) => tagDir => {
-	const results = new TagDirectory(tagDir).tagFiles(filepaths, tags)
-	printResults(results, {alreadyTaggedFiles: ({file, tag}) => `${file} already had the tag ${tag}`})
-}
-
+const tagFiles_ = (tags, filepaths) => tagDir => new TagDirectory(tagDir).tagFiles(filepaths, tags)
 
 module.exports = ({tagDirFilename='tag-dir.json', tags, filenames}) => {
 	//TODO: Allow for the tagging of directories
@@ -17,10 +13,8 @@ module.exports = ({tagDirFilename='tag-dir.json', tags, filenames}) => {
 	const filepaths = filenames.map(filename => {
 		const filepath = path.resolve(process.cwd(),filename)
 		if(fs.existsSync(filepath)) return filepath
-		else console.log(`${filepath} does not exist and will not be tagged.`)
+		else handleIssue('warning', '016', filepath)
 	}).filter(filepath => filepath != null)
 
-	changeTagDir(
-		tagDirFilename, tagFiles_(tags, filepaths), () => console.log('Finished tagging files.')
-	)
+	changeTagDir(tagDirFilename, tagFiles_(tags, filepaths), () => handleIssue('success', '103'))
 }

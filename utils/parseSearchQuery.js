@@ -1,4 +1,3 @@
-//TODO: Return errors responsibly instead of crashing.
 //TODO: Make expression nesting go left-to-right instead of right-to-left.
 
 const getClosingParenIndex = (str, openingParenIndex) => {
@@ -15,7 +14,7 @@ const getClosingParenIndex = (str, openingParenIndex) => {
 }
 
 
-module.exports = (str, not=false) => {
+module.exports = function parse(str, not=false) {
 	str = str.trimStart()
 	if(str[0] == '!')
 		return parse(str.substr(1), !not)
@@ -23,7 +22,7 @@ module.exports = (str, not=false) => {
 		if(str[0] == '(') {
 			const closingParenIndex = getClosingParenIndex(str, 1)
 			if(closingParenIndex == -1)
-				process.exit(1)
+				handleIssue('error', '020', str, closingParenIndex)
 			return {
 				endIndex: closingParenIndex,
 				result: parse(str.substr(1, closingParenIndex + 1), not).result
@@ -43,7 +42,7 @@ module.exports = (str, not=false) => {
 			}
 		}
 		else
-			process.exit(1)
+			handleIssue('error', '021', str, 0)
 	})()
 
 	const strAfterFirstPattern = str.substr(firstPattern.endIndex + 1).trimStart()
@@ -69,5 +68,5 @@ module.exports = (str, not=false) => {
 		}
 	}
 	else
-		process.exit(1)
+		handleIssue('error', '021', str, str[firstPattern.endIndex + 1])
 }
