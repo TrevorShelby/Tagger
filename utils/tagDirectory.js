@@ -8,6 +8,8 @@ module.exports = class TagDirectory {
 	}
 
 	tagFiles(files, tags) {
+		if(tags.length == 0)
+			return
 		files.forEach( file => {
 			if(!(file in this.files))
 				this.files[file] = []
