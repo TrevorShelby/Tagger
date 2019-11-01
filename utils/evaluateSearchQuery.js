@@ -1,33 +1,32 @@
-const getJsonFilepath = require('../utils/getJsonFilepath')
 const TagDirectory = require('../utils/tagDirectory')
 
 
-const evaluate = (tree, available, tagDir) => {
+const evaluate = (tree, tagDir, available=Object.keys(tagDir.files)) => {
 	if(tree.type == 'tag') {
 		if(!(tree.tag.name in tagDir.tags))
 			return {success: false, err: tree.tag.name}
-		return {success: true, data: evaluateTag(tree.tag, available, tagDir)}
+		return {success: true, data: evaluateTag(tree.tag, tagDir, available)}
 	}
 	else if(tree.type == 'exp') {
-		return evaluateExp(tree.exp, available, tagDir)
+		return evaluateExp(tree.exp, tagDir, available)
 	}
 }
 
-const evaluateTag = (tag, available, tagDir) => {
+const evaluateTag = (tag, tagDir, available) => {
 	if(tag.not)
 		return available.filter( file => !tagDir.tags[tag.name].includes(file) )
 	else
 		return available.filter( file => tagDir.tags[tag.name].includes(file) )
 }
 
-const evaluateExp = (exp, available, tagDir) => {
-	const operand1 = evaluate(exp.operand1, available, tagDir)
+const evaluateExp = (exp, tagDir, available) => {
+	const operand1 = evaluate(exp.operand1, tagDir, available)
 	if(!operand1.success) return operand1
 	const result = (() => {	
 		if(exp.operator == 'and')
 			return evaluate(exp.operand2, operand1.data, tagDir)
 		else if(exp.operator == 'or') {
-			const operand2 = evaluate(exp.operand2, available, tagDir)
+			const operand2 = evaluate(exp.operand2, tagDir, available)
 			if(!operand2.success) return operand2
 			return operand2.data.reduce( (acc, file) => {
 				if(acc.includes(file)) return acc
