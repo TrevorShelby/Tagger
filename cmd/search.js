@@ -13,6 +13,6 @@ module.exports = ({tagDirFilename='tag-dir.json', query}) => {
 		else
 			handleIssue('error', '001', tagDirFilepath)
 	})()
-	const matches = evaluate(parse(query).result, tagDir)
+	const matches = evaluate(parse(query), tagDir)
 	handleIssue('success', '105', matches)
 }

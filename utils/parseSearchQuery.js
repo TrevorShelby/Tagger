@@ -47,10 +47,7 @@ module.exports = function parse(str, not=false) {
 
 	const strAfterFirstPattern = str.substr(firstPattern.endIndex + 1).trimStart()
 	if(strAfterFirstPattern.length == 0 || strAfterFirstPattern[0] == ')')
-		return {
-			endIndex: str.length - 1,
-			result: firstPattern.result
-		}
+		return firstPattern.result
 	else if(strAfterFirstPattern[0] == '&' || strAfterFirstPattern[0] == '|') {
 		const operator = (() => {
 			const operatorChar = strAfterFirstPattern[0]
@@ -58,13 +55,10 @@ module.exports = function parse(str, not=false) {
 			else if(operatorChar == '|') return 'or'
 		})()
 		const operand1 = firstPattern.result
-		const {endIndex, result: operand2} = parse(strAfterFirstPattern.substr(1))
+		const operand2 = parse(strAfterFirstPattern.substr(1))
 		return {
-			endIndex,
-			result: {
-				type: 'exp',
-				exp: { operator, operand1, operand2, not }
-			}
+			type: 'exp',
+			exp: { operator, operand1, operand2, not }
 		}
 	}
 	else
