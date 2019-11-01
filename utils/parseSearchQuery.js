@@ -60,7 +60,7 @@ module.exports = (str, not=false) => {
 		})()
 		const operand1 = firstPattern.result
 		const {endIndex, result: operand2} = parse(strAfterFirstPattern.substr(1))
-		return { 
+		return {
 			endIndex,
 			result: {
 				type: 'exp',

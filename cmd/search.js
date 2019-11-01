@@ -16,8 +16,9 @@ module.exports = ({tagDirFilename='tag-dir.json', query}) => {
 	})()
 	const result = evaluate(parse(query).result, tagDir)
 	if(result.success)
-		result.data.forEach( matchedPath => console.log(matchedPath))
+		result.data.forEach( matchedPath => console.log(matchedPath) )
 	else {
 		console.error(`${result.err} is not a tag.`)
+		process.exit(1)
 	}
 }
