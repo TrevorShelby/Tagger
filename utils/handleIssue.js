@@ -28,11 +28,12 @@ const config = {
 	'022': (nonexistentTag) => `${nonexistentTag} is not a tag.`,
 
 	'100': (tagDirFilepath) => `Initialized ${tagDirFilepath} .`,
-	'101': () => 'Finished removing links.',
-	'102': () => 'Finished removing tags.',
-	'103': () => 'Finished tagging links.',
-	'104': () => 'Finished untagging links.',
-	'105': (queryMatches) => {
+	'101': () => 'Added link.'
+	'102': () => 'Removed links.',
+	'103': () => 'Removed tags.',
+	'104': () => 'Tagged links.',
+	'105': () => 'Untagged links.',
+	'106': (queryMatches) => {
 		let out = `Found ${queryMatches.length} result${queryMatches.length != 1 ? 's' : ''}.`
 		queryMatches.forEach( match => out += eol + match )
 		return out
