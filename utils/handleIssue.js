@@ -13,7 +13,7 @@ const config = {
 	'015': (removedLink) => `${removedLink} was removed from the directory since it didn't have any more tags.`,
 	'016': (nonexistentLink) => `${nonexistentLink} does not exist and will not be tagged.`,
 	'017': (invalidTag) => `${invalidTag} is not a valid tag. Tags may only contain letters, numbers, and underscores.`,
-	'018': (newTag) => `Created the tag ${tag}.`,
+	'018': (newTag) => `Created the tag ${newTag}.`,
 	'020': (query, unmatchedParenIndex) => {
 		let out = 'Unmatched parenthesis:'
 		out += eol + query
@@ -62,5 +62,5 @@ module.exports = (type, code, ...data) => {
 			console.error(header + eol + out + eol)
 		}
 	}
-	else if(type == 'success') console.log(out)
+	else if(type == 'info') console.log(out)
 }
