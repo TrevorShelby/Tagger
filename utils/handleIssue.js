@@ -29,7 +29,7 @@ const config = {
 	'022': (nonexistentTag) => `${nonexistentTag} is not a tag.`,
 
 	'100': (tagDirFilepath) => `Initialized ${tagDirFilepath} .`,
-	'101': () => 'Added link.'
+	'101': () => 'Added link.',
 	'102': () => 'Removed links.',
 	'103': () => 'Removed tags.',
 	'104': () => 'Tagged links.',
