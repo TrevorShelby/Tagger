@@ -11,9 +11,10 @@ module.exports = class TagDirectoryFile {
 		})()
 	}
 
-	read() { return fs.readFileSync(this.filepath, {encoding: 'utf-8'}) }
+	//TODO: What happens if file isn't JSON?
+	read() { return JSON.parse(fs.readFileSync(this.filepath, {encoding: 'utf-8'})) }
 
-	//TODO: What happens is data isn't JSON?
+	//TODO: What happens if data isn't JSON?
 	write(data) { fs.writeFileSync(this.filepath, JSON.stringify(data)) }
 
 	exists() { return fs.existsSync(this.filepath) }
