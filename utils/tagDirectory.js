@@ -94,25 +94,3 @@ class TagDirectory {
 		notify({done: true})
 	})}
 }
-
-
-
-(() => {
-	const tagDir = new TagDirectory()
-	const promise = tagDir.newLink({
-		source: 'local-fs',
-		location: '/home/trevor/Projects/Tagger/index.js',
-		tags: ['cli']
-	})
-
-	function logTag(promise) {
-		promise.then( val => {
-			if(val.done) console.log('done!')
-			else {
-				console.log(val.tag)
-				logTag(val.promise)
-			}
-		})
-	}
-	logTag(promise)
-})()
