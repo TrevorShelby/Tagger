@@ -12,7 +12,7 @@ const chainResolve = (resolve, data) => {
 
 
 module.exports = class TagDirectory {
-	constructor(links={}, tags={}) {
+	constructor({links={}, tags={}}) {
 		this.links = links
 		this.tags = tags
 	}
