@@ -22,14 +22,14 @@ module.exports = class TagDirectory {
 		Object.keys(this.links).forEach( lid => {
 			const linkTags = this.links[lid].tags
 			linkTags.forEach( tag => {
-				if(!this.tags[tag].contains(lid))
+				if(!this.tags[tag].includes(lid))
 					notify = chainResolve(notify, {done: false, event: 'tagMissingLink', lid, tag})
 			})
 		})
 		Object.keys(this.tags).forEach( tag => {
 			const taggedLids = this.tags[tag]
 			taggedLids.forEach( lid => {
-				if(!this.links[lid].tags.contains(tag))
+				if(!this.links[lid].tags.includes(tag))
 					notify = chainResolve(notify, {done: false, event: 'linkMissingTag', lid, tag})
 			})
 		})
