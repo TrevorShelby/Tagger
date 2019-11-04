@@ -13,7 +13,7 @@ const getClosingParenIndex = (str, openingParenIndex) => {
 
 
 //TODO: Make expression nesting go left-to-right instead of right-to-left.
-function parse(str, not=false, onErr=(type, data)=>{}) {
+module.exports = function parse(str, not=false, onErr=(type, data)=>{}) {
 	str = str.trimStart()
 	if(str[0] == '!')
 		return parse(str.substr(1), !not, onErr)
