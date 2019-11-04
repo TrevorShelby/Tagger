@@ -18,6 +18,25 @@ class TagDirectory {
 	}
 
 
+	validate() { return new Promise( notify => {
+		Object.keys(this.links).forEach( lid => {
+			const linkTags = this.links[lid].tags
+			linkTags.forEach( tag => {
+				if(!this.tags[tag].contains(lid))
+					notify = chainResolve(notify, {done: false, event: 'tagMissingLink', lid, tag})
+			})
+		})
+		Object.keys(this.tags).forEach( tag => {
+			const taggedLids = this.tags[tag]
+			taggedLids.forEach( lid => {
+				if(!this.links[lid].tags.contains(tag))
+					notify = chainResolve(notify, {done: false, event: 'linkMissingTag', lid, tag})
+			})
+		})
+		notify({done: true})
+	})}
+
+
 	newLink(link) { return new Promise( notify => {
 		//lid is short for for link UID.
 		const lid = uuidv4()
@@ -82,13 +101,43 @@ class TagDirectory {
 				}
 				const taggedLids = this.tags[tag]
 				const lidIndex = taggedLids.indexOf(lid)
-				if(lidIndex == -1) {
-					notify = chainResolve(notify, {done: false, event: 'linkNotInTags', lid, tag})
-					return
-				}
 
 				link.tags.splice(tagIndex, 1)
 				taggedLids.splice(lidIndex, 1)
+			})
+		})
+		notify({done: true})
+	})}
+
+
+	removeLinks(lids) { return new Promise( notify => {
+		lids.forEach( lid => {
+			if(!(lid in this.links)) {
+				notify = chainResolve(notify, {done: false, event: 'nonexistentLink', lid})
+				return
+			}
+			const linkTags = this.links[lid].tags
+			delete this.links[lid]
+			linkTags.forEach( tag => {
+				const lidIndex = this.tags[tag].indexOf(lid)
+				this.tags[tag].splice(lidIndex, 1)
+			})
+		})
+		notify({done: true})
+	})}
+
+
+	removeTags(tags) { return new Promise( notify => {
+		tags.forEach( tag => {
+			if(!(tag in this.tags)) {
+				notify = chainResolve(notify, {done: false, event: 'nonexistentTag', tag})
+				return
+			}
+			const taggedLids = this.tags[tag]
+			delete this.tags[tag]
+			taggedLids.forEach( lid => {
+				const tagIndex = this.links[lid].tags.indexOf(tag)
+				this.links[lid].tags.splice(tagIndex)
 			})
 		})
 		notify({done: true})
