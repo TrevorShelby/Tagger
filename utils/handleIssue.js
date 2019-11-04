@@ -8,7 +8,7 @@ const config = {
 	'010': (nonexistentLink) => `${nonexistentLink} does not exist in this directory.`,
 	'011': (nonexistentTag) => `${nonexistentTag} is not a tag.`,
 	'012': (link, missingTag) => `${link} did not have the tag ${missingTag}.`,
-	'013': (missingLink, tag) => `${missingLink} had the tag ${tag}, but ${tag} did not list as having ${missingLink} , indiciating a corrupted tag directory.`,
+	'013': (missingLink, tag) => `${missingLink} had the tag ${tag}, but ${tag} did not list as having ${missingLink}, indiciating a corrupted tag directory.`,
 	'014': (link, tag) => `${link} already had the tag ${tag}.`,
 	'015': (removedLink) => `${removedLink} was removed from the directory since it didn't have any more tags.`,
 	'016': (nonexistentLink) => `${nonexistentLink} does not exist and will not be tagged.`,
@@ -63,4 +63,5 @@ module.exports = (type, code, ...data) => {
 		}
 	}
 	else if(type == 'info') console.log(out)
+	else throw Error(`${type} is not an issue type.`)
 }
