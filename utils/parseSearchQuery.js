@@ -13,10 +13,10 @@ const getClosingParenIndex = (str, openingParenIndex) => {
 
 
 //TODO: Make expression nesting go left-to-right instead of right-to-left.
-function parse(str, onErr, not=false) {
+function parse(str, not=false, onErr=(type, data)=>{}) {
 	str = str.trimStart()
 	if(str[0] == '!')
-		return parse(str.substr(1), onErr, !not)
+		return parse(str.substr(1), !not, onErr)
 	const firstPattern = (() => {
 		if(str[0] == '(') {
 			const closingParenIndex = getClosingParenIndex(str, 1)
@@ -26,7 +26,7 @@ function parse(str, onErr, not=false) {
 			}
 			return {
 				endIndex: closingParenIndex,
-				result: parse(str.substr(1, closingParenIndex + 1), onErr, not)
+				result: parse(str.substr(1, closingParenIndex + 1), not, onErr)
 			}
 		}
 		else if(/^\w+/.test(str)) {
@@ -59,7 +59,7 @@ function parse(str, onErr, not=false) {
 			else if(operatorChar == '|') return 'or'
 		})()
 		const operand1 = firstPattern.result
-		const operand2 = parse(strAfterFirstPattern.substr(1), onErr)
+		const operand2 = parse(strAfterFirstPattern.substr(1), false, onErr)
 		if(operand2 == undefined) return
 		return {
 			type: 'exp',
