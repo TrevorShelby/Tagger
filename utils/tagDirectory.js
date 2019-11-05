@@ -39,6 +39,7 @@ module.exports = class TagDirectory {
 
 	newLink(link) { return new Promise( notify => {
 		//lid is short for for link UID.
+		//TODO: Use shorter format than UUIDs for UIDs.
 		const lid = uuidv4()
 		//yes, I could use the spread operator here, but I want to explicity list the link fields
 		//in this section, as well as limit them (for now at least). -Trevor
