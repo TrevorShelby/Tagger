@@ -1,4 +1,5 @@
 const eol = require('os').EOL
+//TODO: Rewrite formats with sourceScripts' display names in mind.
 const config = {
 	'000': (tagDirFilepath) => `${tagDirFilepath} already exists.`,
 	'001': (tagDirFilepath) => `${tagDirFilepath} does not exist.`,
@@ -14,6 +15,7 @@ const config = {
 	'016': (nonexistentLink) => `${nonexistentLink} does not exist and will not be tagged.`,
 	'017': (invalidTag) => `${invalidTag} is not a valid tag. Tags may only contain letters, numbers, and underscores.`,
 	'018': (newTag) => `Created the tag ${newTag}.`,
+	'019': (duplicateLinkName, duplicateLinkLid) => `${duplicateLinkName} already exists at ${duplicateLinkLid}.`
 	'020': (query, unmatchedParenIndex) => {
 		let out = 'Unmatched parenthesis:'
 		out += eol + query
