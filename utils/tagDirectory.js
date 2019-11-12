@@ -47,7 +47,7 @@ const TagDirectory = class {
 				cb(Notification.FILE_ALREADY_EXISTS, file)
 				return
 			}
-			this.files[file] = {}
+			this.files[file] = []
 			cb(Notification.ADDED_FILE, file)
 		})
 	}
