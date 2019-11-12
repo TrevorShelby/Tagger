@@ -67,8 +67,8 @@ const TagDirectory = class {
 					cb(Notification.FILE_ALREADY_TAGGED, file, tag)
 					return
 				}
-				file.push(tag)
-				tag.push(file)
+				this.files[file].push(tag)
+				this.tags[tag].push(file)
 				cb(Notification.TAGGED_FILE, file, tag)
 			})
 		})
