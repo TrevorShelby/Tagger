@@ -61,7 +61,7 @@ const TagDirectory = class {
 			tags.forEach( tag => {
 				if(!(tag in this.tags)) {
 					this.tags[tag] = []
-					cb(Notification.CREATED_TAG, tag)
+					cb(Notification.ADDED_TAG, tag)
 				}
 				if(this.tags[tag].includes(file)) {
 					cb(Notification.FILE_ALREADY_TAGGED, file, tag)
