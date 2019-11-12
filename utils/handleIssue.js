@@ -20,7 +20,7 @@ const config = {
 		return out
 	},
 	'021': (query, unexpectedTokenIndex) => {
-		let out = `Unexpected token '${str[unexpectedTokenIndex]}':`
+		let out = `Unexpected token '${query[unexpectedTokenIndex]}':`
 		out += eol + query
 		out += eol + ' '.repeat(unexpectedTokenIndex) + '^'
 		return out
