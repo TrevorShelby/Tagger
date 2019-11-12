@@ -4,7 +4,9 @@ const { Notification, NotificationType } = require('../utils/tagDirectory.js')
 
 const messages = {
 	[Notification.FILE_ALREADY_EXISTS]: (file) => `${file} is already listed in this directory.`,
-	[Notification.ADDED_FILE]: (file) => `Added ${file} to this directory.`
+	[Notification.NONEXISTENT_FILE]: (file) => `${file} isn't listed in this directory.`,
+	[Notification.ADDED_FILE]: (file) => `Added ${file} to this directory.`,
+	[Notification.REMOVED_FILE]: (file) => `Removed ${file} from this directory.`
 }
 
 
