@@ -4,12 +4,8 @@ const TagDirectory = require('./tagDirectory').TagDirectory
 
 
 const readTagDirectory = tagDirFilepath => {
-	if(fs.existsSync(tagDirFilepath)) {
-		const tagDirJson = JSON.parse(fs.readFileSync(tagDirFilepath))
-		return new TagDirectory(tagDirJson)
-	}
-	else
-		return null
+	const tagDirJson = JSON.parse(fs.readFileSync(tagDirFilepath, {encoding: 'utf-8'}))
+	return new TagDirectory(tagDirJson)
 }
 
 
