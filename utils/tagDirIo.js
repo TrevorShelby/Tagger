@@ -10,7 +10,7 @@ const readTagDirectory = tagDirFilepath => {
 }
 
 
-const writeTagDirectory = (tagDir, tagDirFilepath) => {
+const writeTagDirectory = (tagDirFilepath, tagDir) => {
 	const data = JSON.stringify({files: tagDir.files, tags: tagDir.tags})
 	fs.writeFileSync(tagDirFilepath, data)
 }
