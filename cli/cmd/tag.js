@@ -3,7 +3,6 @@ const { readTagDirectory, writeTagDirectory } = require('../tagDirIo')
 const notify = require('../tagDirNotifications')
 
 
-
 //TODO: Allow for the tagging of directories
 module.exports = ({tagDirFilename='tag-dir.json', filenames, tags}) => {
 	const tagDir = readTagDirectory(tagDirFilename)
