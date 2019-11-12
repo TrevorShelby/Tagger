@@ -1,15 +1,14 @@
-const fs = require('fs')
 const path = require('path')
-const changeTagDir = require('../utils/changeTagDir')
-const TagDirectory = require('../utils/tagDirectory')
-const handleIssue = require('../utils/handleIssue')
+const { readTagDirectory, writeTagDirectory } = require('../tagDirIo')
+const notify = require('../tagDirNotifications')
 
 
-const untagFiles_ = (tags,filepaths) => tagDir => new TagDirectory(tagDir).untagFiles(filepaths,tags)
 
-module.exports = ({tagDirFilename='tag-dir.json', tags, filenames}) => {
+module.exports = ({tagDirFilename='tag-dir.json', filenames, tags}) => {
 	//TODO: Allow for the untagging of directories
 	const filepaths = filenames.map( filename => path.resolve(process.cwd(),filename) )
 
-	changeTagDir(tagDirFilename, untagFiles_(tags, filepaths), () => handleIssue('success', '104'))
+	const tagDir = readTagDirectory(tagDirFilename)
+	tagDir.untagFiles(filepaths, tags, notify)
+	writeTagDirectory(tagDirFilename, tagDir)
 }

@@ -1,5 +1,5 @@
 const fs = require('fs')
-const getJsonFilepath = require('../../utils/getJsonFilepath')
+const getJsonFilepath = require('../tagDirIo').getJsonFilepath
 
 
 module.exports = ({tagDirFilename='tag-dir.json'}={}) => {

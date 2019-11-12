@@ -1,5 +1,5 @@
 const path = require('path')
-const { readTagDirectory, writeTagDirectory } = require('../../utils/tagDirIo')
+const { readTagDirectory, writeTagDirectory } = require('../utils/tagDirIo')
 
 
 
@@ -24,5 +24,6 @@ const cliWriteTagDirectory = (tagDirFilename, tagDir) => {
 
 module.exports = {
 	readTagDirectory: cliReadTagDirectory,
-	writeTagDirectory: cliWriteTagDirectory
+	writeTagDirectory: cliWriteTagDirectory,
+	getJsonFilepath
 }

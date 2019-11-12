@@ -1,12 +1,9 @@
-const changeTagDir = require('../utils/changeTagDir')
-const TagDirectory = require('../utils/tagDirectory')
-const handleIssue = require('../utils/handleIssue')
+const { readTagDirectory, writeTagDirectory } = require('../tagDirIo')
+const notify = require('../tagDirNotifications')
 
 
 module.exports = ({tagDirFilename='tag-dir.json', tags}) => {
-	changeTagDir(
-		tagDirFilename,
-		tagDir => new TagDirectory(tagDir).removeTags(tags),
-		() => handleIssue('success', '102')
-	)
+	const tagDir = readTagDirectory(tagDirFilename)
+	tagDir.removeTags(tags, notify)
+	writeTagDirectory(tagDirFilename, tagDir)
 }

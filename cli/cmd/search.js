@@ -1,8 +1,8 @@
 const fs = require('fs')
-const getJsonFilepath = require('../utils/getJsonFilepath')
-const parse = require('../utils/parseSearchQuery')
-const evaluate = require('../utils/evaluateSearchQuery')
-const handleIssue = require('../utils/handleIssue')
+const getJsonFilepath = require('../tagDirIo').getJsonFilepath
+const parse = require('../../utils/parseSearchQuery')
+const evaluate = require('../../utils/evaluateSearchQuery')
+const handleIssue = require('../../utils/handleIssue')
 
 
 module.exports = ({tagDirFilename='tag-dir.json', query}) => {
