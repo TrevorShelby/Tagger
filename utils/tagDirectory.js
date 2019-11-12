@@ -82,11 +82,14 @@ const TagDirectory = class {
 				cb(Notification.NONEXISTENT_FILE, file)
 				return
 			}
-			tags.forEach( tag => {
+			tags = tags.filter( tag => {
 				if(!(tag in this.tags)) {
 					cb(Notification.NONEXISTENT_TAG, tag)
-					return
+					return false
 				}
+				return true
+			})
+			tags.forEach( tag => {
 				const tagIndex = this.files[file].indexOf(tag)
 				if(tagIndex == -1) {
 					cb(Notification.TAG_NOT_IN_FILE, file, tag)
