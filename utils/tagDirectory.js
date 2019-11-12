@@ -77,18 +77,18 @@ const TagDirectory = class {
 	//it would be appropriate for cb to throw an error if the TAG_NOT_IN_FILE notification is
 	//applied to it.
 	untagFiles(files, tags, cb=()=>{}) {
+		tags = tags.filter( tag => {
+			if(!(tag in this.tags)) {
+				cb(Notification.NONEXISTENT_TAG, tag)
+				return false
+			}
+			return true
+		})
 		files.forEach( file => {
 			if(!(file in this.files)) {
 				cb(Notification.NONEXISTENT_FILE, file)
 				return
 			}
-			tags = tags.filter( tag => {
-				if(!(tag in this.tags)) {
-					cb(Notification.NONEXISTENT_TAG, tag)
-					return false
-				}
-				return true
-			})
 			tags.forEach( tag => {
 				const tagIndex = this.files[file].indexOf(tag)
 				if(tagIndex == -1) {
