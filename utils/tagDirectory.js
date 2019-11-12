@@ -43,7 +43,7 @@ const TagDirectory = class {
 
 	addFiles(files, cb=()=>{}) {
 		files.forEach( file => {
-			if(this.files.includes(file)) {
+			if(file in this.files) {
 				cb(Notification.FILE_ALREADY_EXISTS, file)
 				return
 			}
