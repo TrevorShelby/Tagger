@@ -18,6 +18,8 @@ const messages = {
 }
 
 
+//This is meant to be a callback function that TagDirectory methods use to report information and
+//warnings to.
 const notify = (notification, ...data) => {
 	const type = Notification.types[notification]
 	const message = messages[notification](...data)

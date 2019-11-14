@@ -8,6 +8,7 @@ module.exports = ({tagDirFilename='tag-dir.json', filenames, tags}) => {
 	const tagDir = readTagDirectory(tagDirFilename)
 
 	const filepaths = filenames.map(filename => path.resolve(process.cwd(), filename))
+	//Gets rid of tags that use illegal characters.
 	tags = tags.filter( tag => {
 		if(/^\w+$/.test(tag)) return true
 		else {

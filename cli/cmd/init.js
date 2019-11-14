@@ -2,6 +2,7 @@ const fs = require('fs')
 const getJsonFilepath = require('../tagDirIo').getJsonFilepath
 
 
+//Creates a new tag-based directory in the local file system..
 module.exports = ({tagDirFilename='tag-dir.json'}={}) => {
 	const tagDirFilepath = getJsonFilepath(tagDirFilename)
 
