@@ -6,6 +6,7 @@ const tagFiles = require('./cli/cmd/tag')
 const untagFiles = require('./cli/cmd/untag')
 const removeFiles = require('./cli/cmd/removeFiles')
 const removeTags = require('./cli/cmd/removeTags')
+const listTags = require('./cli/cmd/listTags')
 const search = require('./cli/cmd/search')
 
 
@@ -44,6 +45,9 @@ module.exports = () => {
 			tagDirFilename: args.d || args.directory || 'tag-dir.json',
 			tags: args._.slice(1)
 		})
+	else if(cmd == 'tags') {
+		listTags({tagDirFilename: args._[1] || 'tag-dir.json'})
+	}
 	else if(cmd == 'search')
 		search({
 			tagDirFilename: args.d || args.directory || 'tag-dir.json',
