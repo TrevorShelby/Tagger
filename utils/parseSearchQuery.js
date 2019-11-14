@@ -27,7 +27,7 @@ const parse = (str, not=false, onErr=()=>{}) => {
 		if(str[0] == '(') {
 			const closingParenIndex = getClosingParenIndex(str, 1)
 			if(closingParenIndex == -1) {
-				onErr(Issue.UNMATCHED_PARENTHESIS, str, 0)
+				onErr(Issue.UNMATCHED_PARENTHESIS)
 				throw new Error()
 			}
 			return {
@@ -49,7 +49,7 @@ const parse = (str, not=false, onErr=()=>{}) => {
 			}
 		}
 		else {
-			onErr(Issue.UNEXPECTED_TOKEN, str, 0)
+			onErr(Issue.UNEXPECTED_TOKEN)
 			throw new Error()
 		}
 	})()
@@ -71,7 +71,7 @@ const parse = (str, not=false, onErr=()=>{}) => {
 		}
 	}
 	else {
-		onErr(Issue.UNEXPECTED_TOKEN, str, firstPattern.endIndex + 1)
+		onErr(Issue.UNEXPECTED_TOKEN)
 		throw new Error()
 	}
 }

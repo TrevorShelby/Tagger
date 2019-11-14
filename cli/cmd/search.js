@@ -12,13 +12,11 @@ module.exports = ({tagDirFilename='tag-dir.json', query}) => {
 		return
 	}
 
-	const parseTree = parse(query, false, (err, query, index) => {
+	const parseTree = parse(query, false, err => {
 		if(err == parseIssue.UNEXPECTED_TOKEN)
-			console.error('Unexpected token: ' + query[index])
+			console.error('Unexpected token!')
 		else if(err == parseIssue.UNMATCHED_PARENTHESIS)
-			console.error('Unmatched parenthesis: ')
-		console.error(query)
-		console.error(' '.repeat(index) + '^')
+			console.error('Unmatched parenthesis!')
 		process.exit(1)
 	})
 	const matches = evaluate(parseTree, tagDir, Object.keys(tagDir.files), tag => {
