@@ -16,7 +16,7 @@ module.exports = ({tagDirFilename='tag-dir.json', query}) => {
 		if(err == parseIssue.UNEXPECTED_TOKEN)
 			console.error('Unexpected token: ' + query[index])
 		else if(err == parseIssue.UNMATCHED_PARENTHESIS)
-			console.error('Unmatched parenthesis')
+			console.error('Unmatched parenthesis: ')
 		console.error(query)
 		console.error(' '.repeat(index) + '^')
 		process.exit(1)
