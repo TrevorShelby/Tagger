@@ -47,7 +47,7 @@ module.exports = () => {
 	else if(cmd == 'search')
 		search({
 			tagDirFilename: args.d || args.directory || 'tag-dir.json',
-			query: args._[1]
+			query: args._.slice(1).join(' ')
 		})
 	else
 		console.log('Unrecognized command.')
