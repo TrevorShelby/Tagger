@@ -1,5 +1,7 @@
-const handleIssue = require('./handleIssue')
-
+const Issue = {
+	UNEXPECTED_TOKEN: 0,
+	UNMATCHED_PARENTHESIS: 1
+}
 
 //TODO: Make expression nesting go left-to-right instead of right-to-left.
 
@@ -17,18 +19,20 @@ const getClosingParenIndex = (str, openingParenIndex) => {
 }
 
 
-module.exports = function parse(str, not=false) {
+const parse = (str, not=false, onErr=()=>{}) => {
 	str = str.trimStart()
 	if(str[0] == '!')
-		return parse(str.substr(1), !not)
+		return parse(str.substr(1), !not, onErr)
 	const firstPattern = (() => {
 		if(str[0] == '(') {
 			const closingParenIndex = getClosingParenIndex(str, 1)
-			if(closingParenIndex == -1)
-				handleIssue('error', '020', str, 0)
+			if(closingParenIndex == -1) {
+				onErr(Issue.UNMATCHED_PARENTHESIS, str, 0)
+				throw new Error()
+			}
 			return {
 				endIndex: closingParenIndex,
-				result: parse(str.substr(1, closingParenIndex + 1), not).result
+				result: parse(str.substr(1, closingParenIndex + 1), not, onErr)
 			}
 		}
 		else if(/^\w+/.test(str)) {
@@ -44,8 +48,10 @@ module.exports = function parse(str, not=false) {
 				}
 			}
 		}
-		else
-			handleIssue('error', '021', str, 0)
+		else {
+			onErr(Issue.UNEXPECTED_TOKEN, str, 0)
+			throw new Error()
+		}
 	})()
 
 	const strAfterFirstPattern = str.substr(firstPattern.endIndex + 1).trimStart()
@@ -58,12 +64,18 @@ module.exports = function parse(str, not=false) {
 			else if(operatorChar == '|') return 'or'
 		})()
 		const operand1 = firstPattern.result
-		const operand2 = parse(strAfterFirstPattern.substr(1))
+		const operand2 = parse(strAfterFirstPattern.substr(1), false, onErr)
 		return {
 			type: 'exp',
 			exp: { operator, operand1, operand2, not }
 		}
 	}
-	else
-		handleIssue('error', '021', str, firstPattern.endIndex + 2)
+	else {
+		onErr(Issue.UNEXPECTED_TOKEN, str, firstPattern.endIndex + 1)
+		throw new Error()
+	}
 }
+
+
+
+module.exports = { parse, Issue }
