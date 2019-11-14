@@ -1,47 +1,53 @@
 const parseArgs = require('minimist')
 
-const initTagDir = require('./cmd/init')
-const tagFiles = require('./cmd/tag')
-const untagFiles = require('./cmd/untag')
-const removeFiles = require('./cmd/removeFiles')
-const removeTags = require('./cmd/removeTags')
-const search = require('./cmd/search')
+const initTagDir = require('./cli/cmd/init')
+const addFiles = require('./cli/cmd/addFiles')
+const tagFiles = require('./cli/cmd/tag')
+const untagFiles = require('./cli/cmd/untag')
+const removeFiles = require('./cli/cmd/removeFiles')
+const removeTags = require('./cli/cmd/removeTags')
+const search = require('./cli/cmd/search')
 
 
 module.exports = () => {
 	const args = parseArgs(process.argv.slice(2))
 	const cmd = args._[0]
 
+	//TODO: Add errors for missing fields.
 	if(cmd == 'i' || cmd == 'init' || cmd == 'initialize')
 		initTagDir({tagDirFilename: args._[1] || 'tag-dir.json'})
+	else if(cmd == 'a' || cmd == 'add' || cmd == 'add-files') {
+		addFiles({
+			tagDirFilename: args.d || args.directory || 'tag-dir.json',
+			filenames: args._.slice(1)
+		})
+	}
 	else if(cmd == 't' || cmd == 'tag')
 		tagFiles({
-			tagDirFilename: args._[1] || 'tag-dir.json',
-			tags: (args.tags || args.t).split(','),
-			filenames: (args.files || args.f).split(',')
+			tagDirFilename: args.d || args.directory || 'tag-dir.json',
+			tags: [(args.tag || args.t)],
+			filenames: args._.slice(1)
 		})
 	else if(cmd == 'un' || cmd == 'untag')
 		untagFiles({
-			tagDirFilename: args._[1] || 'tag-dir.json',
-			tags: (args.tag || args.t).split(','),
-			filenames: (args.files || args.f).split(',')
+			tagDirFilename: args.d || args.directory || 'tag-dir.json',
+			tags: [(args.tag || args.t)],
+			filenames: args._.slice(1)
 		})
 	else if(cmd == 'rf' || cmd == 'remove-files')
-		//TODO: Try to figure out a way where filenames can be non-option arguments while still
-		//accounting for the optional tagDirFilename argument.
 		removeFiles({
-			tagDirFilename: args._[1] || 'tag-dir.json',
-			filenames: (args.files || args.f).split(',')
+			tagDirFilename: args.d || args.directory || 'tag-dir.json',
+			filenames: args._.slice(1)
 		})
 	else if(cmd == 'rt' || cmd == 'remove-tags')
 		removeTags({
-			tagDirFilename: args._[1] || 'tag-dir.json',
-			tags: (args.tag || args.t).split(',')
+			tagDirFilename: args.d || args.directory || 'tag-dir.json',
+			tags: args._.slice(1)
 		})
 	else if(cmd == 'search')
 		search({
-			tagDirFilename: args._[1] || 'tag-dir.json',
-			query: args.q || args.query
+			tagDirFilename: args.d || args.directory || 'tag-dir.json',
+			query: args._[1]
 		})
 	else
 		console.log('Unrecognized command.')
