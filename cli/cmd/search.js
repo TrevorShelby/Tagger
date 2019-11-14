@@ -6,7 +6,7 @@ const evaluate = require('../../utils/evaluateSearchQuery')
 module.exports = ({tagDirFilename='tag-dir.json', query}) => {
 	const tagDir = readTagDirectory(tagDirFilename)
 	if(query == undefined) {
-		const untaggedFiles = tagDir.files.filter( fileTags => fileTags.length == 0 )
+		const untaggedFiles = Object.keys(tagDir.files).filter( file => tagDir.files[file].length == 0 )
 		console.log(`Found ${untaggedFiles.length != 1 ? 'these untagged files:' : 'this untagged file:'}`)
 		untaggedFiles.forEach( file => console.log('  - ' + file) )
 		return
